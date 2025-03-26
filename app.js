@@ -16,9 +16,14 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
 });
 
-app.get('/stream/:videoLink', async (req, res) => {
+app.get('/stream', async (req, res) => {
     // const vUrl = 'https://pixeldrain.net/api/file/BB6p9QrA?download';
-    const vUrl = req.params.videoLink;
+    // const vUrl = req.params.videoLink;
+    const vUrl = req.query.videoLink;
+
+    if (!vUrl) {
+        return res.status(400).send('Missing video URL');
+    }
 
     const range = req.headers.range;
     if (!range) {
